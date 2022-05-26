@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nginx-webServer.fullname" . }}
+  labels:
+    {{- include "nginx-webServer.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: {{ .Values.service.port.portName }}
+      port: {{ .Values.service.port.portNumber }}
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "nginx-webServer.selectorLabels" . | nindent 4 }}
